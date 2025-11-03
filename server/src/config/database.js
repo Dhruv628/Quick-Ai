@@ -106,6 +106,23 @@ async function isDatabaseConnected() {
   }
 }
 
+// * function to get prisma instance (with initialization if needed)
+function getPrismaClient() {
+  if (!prisma) {
+    console.warn("⚠️ Prisma client not initialized, creating new instance...");
+    // Create a basic Prisma client as fallback
+    prisma = new PrismaClient({
+      datasources: {
+        db: {
+          url: process.env.DATABASE_URL,
+        },
+      },
+      log: ["error"],
+    });
+  }
+  return prisma;
+}
+
 // * graceful shutdown
 async function disconnectDatabase() {
   try {
@@ -118,4 +135,4 @@ async function disconnectDatabase() {
   }
 }
 
-export { connectDatabase, isDatabaseConnected, disconnectDatabase, prisma };
+export { connectDatabase, isDatabaseConnected, disconnectDatabase, prisma, getPrismaClient };

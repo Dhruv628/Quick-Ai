@@ -3,7 +3,7 @@ import axios from "axios";
 import z from "zod";
 import { v2 as cloudinary } from "cloudinary";
 import BadRequestError from "../../utils/errors/bad-request-error.js";
-import { prisma } from "../../config/database.js";
+import { getPrismaClient } from "../../config/database.js";
 import {
   AI_PROMPT_CONTEXT,
   CREATION_TYPE,
@@ -54,6 +54,7 @@ export const generateArticle = async ({ userId, prompt, length }) => {
     const content = response.choices[0].message.content;
 
     // * save the data in the db
+    const prisma = getPrismaClient(); // * get prisma client safely
     const creation = await prisma.creation.create({
       data: {
         userId,
@@ -115,6 +116,7 @@ export const generateBlogTitles = async ({ userId, prompt, category }) => {
     const content = response.choices[0].message.content;
 
     // * save the data in the db
+    const prisma = getPrismaClient(); // * get prisma client safely
     const creation = await prisma.creation.create({
       data: {
         userId,
@@ -192,6 +194,7 @@ export const generateImage = async ({
     );
 
     // * save the data in the db
+    const prisma = getPrismaClient(); // * get prisma client safely
     const creation = await prisma.creation.create({
       data: {
         userId,
@@ -244,6 +247,7 @@ export const removeBackground = async ({ userId, image }) => {
     console.info("Uploaded image URL:", content);
 
     // * save the data in the db
+    const prisma = getPrismaClient(); // * get prisma client safely
     const creation = await prisma.creation.create({
       data: {
         userId,
@@ -302,6 +306,7 @@ export const removeObject = async ({ userId, object, image }) => {
     console.info("Uploaded image URL:", content);
 
     // * save the data in the db
+    const prisma = getPrismaClient(); // * get prisma client safely
     const creation = await prisma.creation.create({
       data: {
         userId,
@@ -397,6 +402,7 @@ export const resumeReview = async ({ userId, resume, fileType }) => {
     console.log("feedback--", content, "--feedback");
 
     // * save the data in the db
+    const prisma = getPrismaClient(); // * get prisma client safely
     const creation = await prisma.creation.create({
       data: {
         userId,

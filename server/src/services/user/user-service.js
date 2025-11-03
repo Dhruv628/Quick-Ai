@@ -1,6 +1,6 @@
 import z from "zod";
 import BadRequestError from "../../utils/errors/bad-request-error.js";
-import { prisma } from "../../config/database.js";
+import { getPrismaClient } from "../../config/database.js";
 
 const userCreationsSchema = z.object({
   userId: z.string().min(1, "userId is required"),
@@ -20,6 +20,7 @@ export const getUserCreations = async ({ userId, options = {} }) => {
     userCreationsSchema.parse({ userId }); // * validate input
 
     const { select, orderBy, skip, take } = options;
+    const prisma = getPrismaClient(); // * get prisma client safely
 
     const creations = await prisma.creation.findMany({
       where: {
@@ -58,6 +59,7 @@ export const likeCreation = async ({ userId, creationId }) => {
     likeCreationSchema.parse({ userId, creationId }); // * validate input
 
     creationId = parseInt(creationId); // * ensure creationId is an integer
+    const prisma = getPrismaClient(); // * get prisma client safely
 
     // * use atomic operation with RETURNING clause to get updated data in single query
     const [updatedCreation] = await prisma.$queryRaw`
@@ -101,6 +103,7 @@ export const getPublicCreations = async ({
 } = {}) => {
   try {
     const skip = (page - 1) * limit;
+    const prisma = getPrismaClient(); // * get prisma client safely
 
     const creations = await prisma.creation.findMany({
       where: {
