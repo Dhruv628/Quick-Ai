@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 import { useAuth } from '@clerk/clerk-react';
-import axios from 'axios';
+import api from '../utils/api';
 
 const useResumeMutation = () => {
   const { getToken } = useAuth();
@@ -11,7 +11,7 @@ const useResumeMutation = () => {
       const formData = new FormData();
       formData.append('file', resume);
 
-      const response = await axios.post('/api/ai/review/resume', 
+      const response = await api.post('/api/ai/review/resume', 
         formData,
         {
           headers: {

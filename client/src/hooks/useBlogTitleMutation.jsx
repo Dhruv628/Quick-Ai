@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 import { useAuth } from '@clerk/clerk-react';
-import axios from 'axios';
+import api from '../utils/api';
 
 const useBlogTitleMutation = () => {
   const { getToken } = useAuth();
@@ -8,7 +8,7 @@ const useBlogTitleMutation = () => {
   return useMutation({
     mutationFn: async ({ prompt, category }) => {
       const token = await getToken();
-      const response = await axios.post('/api/ai/blog-titles', 
+      const response = await api.post('/api/ai/blog-titles', 
         { prompt, category },
         {
           headers: {

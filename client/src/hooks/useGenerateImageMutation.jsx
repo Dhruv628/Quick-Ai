@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 import { useAuth } from '@clerk/clerk-react';
-import axios from 'axios';
+import api from '../utils/api';
 
 const useGenerateImageMutation = () => {
   const { getToken } = useAuth();
@@ -8,7 +8,7 @@ const useGenerateImageMutation = () => {
   return useMutation({
     mutationFn: async ({ prompt, style, publish }) => {
       const token = await getToken();
-      const response = await axios.post('/api/ai/image', 
+      const response = await api.post('/api/ai/image', 
         { prompt, style, publish },
         {
           headers: {

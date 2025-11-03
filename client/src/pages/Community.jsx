@@ -3,7 +3,7 @@ import { Heart } from 'lucide-react';
 import PageLoader from '../components/PageLoader';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
-import axios from 'axios';
+import api from '../utils/api';
 import LoadingSonnerToast from '../components/LoadingSonnerToast';
 
 const Community = () => {
@@ -15,7 +15,7 @@ const Community = () => {
     queryKey: ['publicCreations'],
     queryFn: async () => {
       const token = await getToken();
-      const response = await axios.get('/api/user/creations/public', {
+      const response = await api.get('/api/user/creations/public', {
         headers: { Authorization: `Bearer ${token}` }
       });
       return response.data.creations || []; // * return the data directly
@@ -32,7 +32,7 @@ const Community = () => {
   const likeMutation = useMutation({
     mutationFn: async (creationId) => {
       const token = await getToken();
-      const response = await axios.post(`/api/user/creations/${creationId}/like`, {}, {
+      const response = await api.post(`/api/user/creations/${creationId}/like`, {}, {
         headers: { Authorization: `Bearer ${token}` }
       });
       return { creationId, updatedCreation: response.data.data };

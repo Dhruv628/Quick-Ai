@@ -4,7 +4,7 @@ import { useState } from 'react';
 import CreationItem from '../components/dashboard/CreationItem';
 import { toast } from 'sonner';
 import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
+import api from '../utils/api';
 import PageLoader from '../components/PageLoader';
 
 const Dashboard = () => {
@@ -19,7 +19,7 @@ const Dashboard = () => {
     queryFn: async () => {
       try {
         const token = await getToken();
-        const response = await axios.get('/api/user/creations', {
+        const response = await api.get('/api/user/creations', {
           headers: { Authorization: `Bearer ${token}` }
         });
         setCreations(response?.data?.creations || []);

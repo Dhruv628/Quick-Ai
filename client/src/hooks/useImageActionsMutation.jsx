@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 import { useAuth } from '@clerk/clerk-react';
-import axios from 'axios';
+import api from '../utils/api';
 
 const useImageActionsMutation = () => {
   const { getToken } = useAuth();
@@ -12,7 +12,7 @@ const useImageActionsMutation = () => {
       formData.append('file', image);
       formData.append('object', object);
 
-      const response = await axios.post(url, 
+      const response = await api.post(url, 
         formData,
         {
           headers: {
