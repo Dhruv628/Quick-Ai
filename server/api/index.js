@@ -9,16 +9,16 @@ const initializeServices = async () => {
   if (!isInitialized) {
     try {
       console.log("🚀 Initializing serverless services...");
-      
+
       // Connect to database
       const dbConnected = await connectDatabase();
       if (!dbConnected) {
         throw new Error("Failed to connect to database");
       }
-      
+
       // Connect to cloudinary
       await connectToCloudinary();
-      
+
       isInitialized = true;
       console.log("✅ Serverless services initialized successfully!");
     } catch (error) {

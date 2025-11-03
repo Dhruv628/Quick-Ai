@@ -135,4 +135,10 @@ async function disconnectDatabase() {
   }
 }
 
-export { connectDatabase, isDatabaseConnected, disconnectDatabase, prisma, getPrismaClient };
+export {
+  connectDatabase,
+  isDatabaseConnected,
+  disconnectDatabase,
+  prisma,
+  getPrismaClient,
+};
