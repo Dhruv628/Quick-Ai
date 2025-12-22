@@ -1,6 +1,7 @@
 import { lazy, Suspense } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import PageLoader from './components/PageLoader';
+import { Analytics } from "@vercel/analytics/react"
 
 const Home = lazy(() => import('./pages/Home'));
 const BlogTitles = lazy(() => import('./pages/BlogTitles'));
@@ -16,6 +17,7 @@ const WriteArticle = lazy(() => import('./pages/WriteArticle'));
 const App = () => {
   return (
     <div>
+      <Analytics/>
       <Suspense fallback={<PageLoader />}>
         <Routes>
           <Route path='/' element={<Home />} />
